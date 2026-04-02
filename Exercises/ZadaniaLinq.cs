@@ -32,7 +32,8 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie02_AdresyEmailStudentow()
     {
-        throw Niezaimplementowano(nameof(Zadanie02_AdresyEmailStudentow));
+        return DaneUczelni.Studenci
+            .Select(s => s.Email);
     }
 
     /// <summary>
@@ -47,7 +48,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie03_StudenciPosortowani()
     {
-        throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
+        return DaneUczelni.Studenci
+            .OrderBy(s => s.Nazwisko)
+            .ThenBy(s => s.Imie)
+            .Select(s => $"{s.NumerIndeksu} | {s.Imie} {s.Nazwisko}");
     }
 
     /// <summary>
@@ -62,7 +66,15 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie04_PierwszyPrzedmiotAnalityczny()
     {
-        throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
+        var przedmiot = DaneUczelni.Przedmioty
+            .FirstOrDefault(p => p.Kategoria == "Analytics");
+
+        if (przedmiot == null)
+        {
+            return ["Brak przedmiotu z kategorii Analytics"];
+        }
+
+        return [$"{przedmiot.Nazwa} | {przedmiot.DataStartu:yyyy-MM-dd}"];
     }
 
     /// <summary>
@@ -79,7 +91,9 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie05_CzyIstniejeNieaktywneZapisanie()
     {
-        throw Niezaimplementowano(nameof(Zadanie05_CzyIstniejeNieaktywneZapisanie));
+        var istnieje = DaneUczelni.Zapisy.Any(z => !z.CzyAktywny);
+        return [$"Czy istnieje nieaktywne zapisanie: {istnieje}"];
+        
     }
 
     /// <summary>
